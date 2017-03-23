@@ -22,15 +22,15 @@ gulp.task('browserSync', function() {
 
 gulp.task('sass', function() {
   return gulp.src('app/scss/**/*.scss') // Gets all files ending with .scss in app/scss and children dirs
-    .pipe(sass()) // Sends it through a gulp plugin
+    .pipe(sass().on('error', sass.logError)) // Sends it through a gulp plugin
     .pipe(gulp.dest('app/css')) // Outputs the file in the destination folder
     .pipe(browserSync.reload({
       stream: true
     }));
-});
+})
 
 // Watchers
-gulp.task('watch', ['browserSync', 'sass'], function() {
+gulp.task('watch', function() {
   gulp.watch('app/scss/**/*.scss', ['sass']);
   gulp.watch('app/*.html', browserSync.reload);
   gulp.watch('app/js/**/*.js', browserSync.reload);
